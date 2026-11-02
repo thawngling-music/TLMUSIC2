@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102b20">
+<title>THAWNG LING MUSIC — AI Studio</title>
+<style>
+:root{--bg:#0d1512;--panel:#141e19;--panel2:#202a25;--line:#2b3932;--muted:#91a29a;--text:#edf5f0;--green:#38d9ad;--green2:#1c6b4c}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#205b3e 0,#101d16 38%,#0b100e 85%);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+.wrap{max-width:850px;margin:auto;padding:22px 16px 36px}.brand{display:flex;align-items:center;gap:12px;margin:4px 0 22px}.logo{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--green);color:var(--green);font-weight:800;letter-spacing:-1px;background:#0c1711}.brand h1{font-size:18px;letter-spacing:2px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.pills{display:flex;gap:8px;overflow:auto;padding:7px;background:#101713;border:1px solid var(--line);border-radius:22px;margin-bottom:16px}.pills button{white-space:nowrap;border:0;background:transparent;color:var(--muted);padding:12px 14px;border-radius:17px;font-size:14px}.pills button.active{background:#194b38;color:var(--green);font-weight:700}
+.card{background:rgba(18,27,22,.96);border:1px solid var(--line);border-radius:24px;padding:20px;margin-bottom:14px;box-shadow:0 16px 40px #0002}.card h2{font-size:21px;margin:0 0 5px}.hint{color:var(--muted);font-size:13px;margin:0 0 17px}
+label{display:block;color:var(--muted);font-size:13px;margin:12px 0 6px}input,select,textarea{width:100%;border:1px solid #34453b;border-radius:13px;background:#0d1511;color:var(--text);padding:13px;font:inherit;outline:none}textarea{min-height:115px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.btn{border:0;border-radius:14px;padding:14px 18px;background:var(--green);color:#071710;font-weight:800;font-size:15px;cursor:pointer}.btn:disabled{opacity:.55;cursor:wait}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.result{white-space:pre-wrap;overflow-wrap:anywhere;background:#0c130f;border:1px solid var(--line);border-radius:15px;padding:16px;margin-top:16px;min-height:80px;color:#e3eee7}.result:empty{display:none}.status{color:var(--muted);font-size:12px;margin-top:10px}.badge{display:inline-block;color:var(--green);background:#143c2b;padding:4px 8px;border-radius:8px;font-size:11px;font-weight:700}.hidden{display:none!important}.footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}.small{font-size:12px;color:var(--muted)}
+@media(max-width:540px){.wrap{padding:15px 12px 28px}.card{padding:16px;border-radius:20px}.grid{grid-template-columns:1fr}.brand h1{font-size:16px}.pills button{padding:11px 12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="brand"><div class="logo">TL</div><div><h1>THAWNG LING MUSIC</h1><p>FULL AI MUSIC STUDIO <span class="badge">BETA</span></p></div></header>
+<nav class="pills" aria-label="AI tools">
+<button class="active" data-tab="chat">AI Chat</button><button data-tab="theory">Music Theory</button><button data-tab="chords">Chord Assistant</button><button data-tab="mixing">Mixing Assistant</button><button data-tab="songwriting">Songwriting</button>
+</nav>
+<section class="card tool" id="chat">
+<h2>AI Music Chat</h2><p class="hint">မေးချင်တာကို မြန်မာလိုဖြစ်စေ English လိုဖြစ်စေ မေးနိုင်ပါတယ်။</p>
+<label for="chatPrompt">Your question</label><textarea id="chatPrompt" placeholder="ဥပမာ — 81 BPM မှာ harmony group အတွက် reverb time နဲ့ pre-delay ဘယ်လောက်ထားသင့်လဲ?"></textarea>
+<div class="actions"><button class="btn" data-ask="chat">Ask AI</button><button class="btn secondary" data-example="chat">Try example</button></div><div class="result" id="chatResult" aria-live="polite"></div>
+</section>
+<section class="card tool hidden" id="theory">
+<h2>Music Theory Assistant</h2><p class="hint">Key, scale, intervals, harmony နဲ့ song structure ကို နားလည်လွယ်အောင် ရှင်းပြပါ။</p>
+<div class="grid"><div><label for="theoryTopic">Topic</label><select id="theoryTopic"><option>Major and minor scales</option><option>Intervals</option><option>Chord construction</option><option>Harmonization</option><option>Circle of fifths</option><option>Song structure</option><option>Explain my question</option></select></div><div><label for="theoryLevel">Level</label><select id="theoryLevel"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div></div>
+<label for="theoryPrompt">Extra details (optional)</label><textarea id="theoryPrompt" placeholder="ဥပမာ — G major key မှာ borrowed chords ကို ရှင်းပြပါ။"></textarea><div class="actions"><button class="btn" data-ask="theory">Explain</button></div><div class="result" id="theoryResult" aria-live="polite"></div>
+</section>
+<section class="card tool hidden" id="chords">
+<h2>Chord Assistant</h2><p class="hint">Key နဲ့ mood ကို ရွေးပြီး chord progression အကြံပြုချက် ရယူပါ။</p>
+<div class="grid"><div><label for="chordKey">Key</label><select id="chordKey"><option>C</option><option>C# / Db</option><option>D</option><option>D# / Eb</option><option>E</option><option>F</option><option>F# / Gb</option><option>G</option><option>G# / Ab</option><option>A</option><option>A# / Bb</option><option>B</option><option>Am</option><option>Bm</option><option>Dm</option><option>Em</option><option>F#m</option><option>Gm</option></select></div><div><label for="chordMood">Mood / Style</label><select id="chordMood"><option>Emotional ballad</option><option>Pop</option><option>Worship</option><option>Rock</option><option>R&B / Soul</option><option>Acoustic singer-songwriter</option><option>Traditional</option><option>Jazz</option></select></div><div><label for="chordTempo">Tempo (BPM)</label><input id="chordTempo" type="number" min="30" max="300" value="80"></div><div><label for="chordMeter">Time signature</label><select id="chordMeter"><option>4/4</option><option>3/4</option><option>6/8</option><option>2/4</option><option>5/4</option></select></div></div>
+<label for="chordPrompt">What are you writing? (optional)</label><textarea id="chordPrompt" placeholder="ဥပမာ — acoustic guitar အတွက် sad verse နဲ့ powerful chorus လိုချင်တယ်။"></textarea><div class="actions"><button class="btn" data-ask="chords">Generate progression</button></div><div class="result" id="chordsResult" aria-live="polite"></div>
+</section>
+<section class="card tool hidden" id="mixing">
+<h2>AI Mixing Assistant</h2><p class="hint">စတင်ချိန်ညှိဖို့ အကြံပြုချက်ဖြစ်ပြီး နားထောင်စမ်းသပ်ကာ ပြန်ညှိပါ။</p>
+<div class="grid"><div><label for="mixInstrument">Instrument / source</label><select id="mixInstrument"><option>Lead vocal</option><option>Backing vocals / harmony group</option><option>Snare drum</option><option>Acoustic guitar rhythm</option><option>Acoustic guitar lead</option><option>Electric guitar</option><option>Piano</option><option>Bass</option><option>Drum bus</option><option>Full mix</option></select></div><div><label for="mixStyle">Genre / style</label><select id="mixStyle"><option>Ballad</option><option>Pop</option><option>Rock</option><option>Acoustic</option><option>Worship</option><option>R&B</option><option>Traditional</option><option>Indie</option></select></div><div><label for="mixBpm">Tempo (BPM)</label><input id="mixBpm" type="number" min="30" max="300" value="81"></div><div><label for="mixPlugin">Plugin / tools</label><select id="mixPlugin"><option>Valhalla VintageVerb</option><option>Any reverb plugin</option><option>Stock EQ and compressor</option><option>Any DAW tools</option></select></div></div>
+<label for="mixPrompt">Mix goal / details</label><textarea id="mixPrompt" placeholder="ဥပမာ — vocal မဖုံးဘဲ wide ဖြစ်တဲ့ harmony, dark warm reverb လိုချင်တယ်။"></textarea><div class="actions"><button class="btn" data-ask="mixing">Build mix starting points</button></div><div class="result" id="mixingResult" aria-live="polite"></div>
+</section>
+<section class="card tool hidden" id="songwriting">
+<h2>Songwriting Assistant</h2><p class="hint">Original lyric ideas, themes, melodies described in words, chord plans and arrangement structure.</p>
+<div class="grid"><div><label for="songLanguage">Language</label><select id="songLanguage"><option>Burmese</option><option>English</option><option>Burmese and English</option></select></div><div><label for="songGenre">Genre</label><select id="songGenre"><option>Acoustic ballad</option><option>Pop</option><option>Rock ballad</option><option>Worship</option><option>R&B</option><option>Folk / traditional</option><option>Indie</option></select></div><div><label for="songMood">Emotion</label><select id="songMood"><option>Heartbreak</option><option>Hopeful</option><option>Romantic</option><option>Nostalgic</option><option>Motivational</option><option>Peaceful</option><option>Bittersweet</option></select></div><div><label for="songTempo">Target BPM</label><input id="songTempo" type="number" min="30" max="300" value="78"></div></div>
+<label for="songPrompt">Theme / story / ideas</label><textarea id="songPrompt" placeholder="ဥပမာ — ဝေးကွာနေရတဲ့သူကို မမေ့နိုင်တဲ့အကြောင်း၊ ရိုးရှင်းတဲ့ မြန်မာစာသားနဲ့ chorus hook တစ်ခုပါစေ။"></textarea><div class="actions"><button class="btn" data-ask="songwriting">Create song ideas</button></div><div class="result" id="songwritingResult" aria-live="polite"></div>
+</section>
+<div class="footer">THAWNG LING MUSIC • AI responses may be imperfect. Verify musical details by ear.</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tool').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab));}));
+document.querySelectorAll('[data-example]').forEach(b=>b.addEventListener('click',()=>{$('chatPrompt').value='I am mixing an emotional 3/4 ballad at 81 BPM. Suggest practical reverb time and pre-delay for harmony vocals using Valhalla VintageVerb. Explain the trade-offs.';}));
+function buildPrompt(kind){
+ if(kind==='chat') return $('chatPrompt').value.trim();
+ if(kind==='theory') return `Explain music theory topic: ${$('theoryTopic').value}. Skill level: ${$('theoryLevel').value}. Extra context: ${$('theoryPrompt').value.trim()||'Give a practical explanation with examples.'}`;
+ if(kind==='chords') return `Create a useful chord progression. Key: ${$('chordKey').value}; mood/style: ${$('chordMood').value}; tempo: ${$('chordTempo').value} BPM; time signature: ${$('chordMeter').value}. Additional request: ${$('chordPrompt').value.trim()||'Give verse, pre-chorus, and chorus options with roman numerals and playing tips.'}`;
+ if(kind==='mixing') return `Give practical mixing starting points for source: ${$('mixInstrument').value}; genre: ${$('mixStyle').value}; tempo: ${$('mixBpm').value} BPM; tools/plugin: ${$('mixPlugin').value}. Goal: ${$('mixPrompt').value.trim()||'Give a balanced professional starting point.'} Include reverb time, pre-delay where relevant, EQ, compression, panning, and level-setting suggestions. State assumptions and explain that values are starting points, not universal rules.`;
+ return `Help write an original song. Language: ${$('songLanguage').value}; genre: ${$('songGenre').value}; emotion: ${$('songMood').value}; target tempo: ${$('songTempo').value} BPM; theme: ${$('songPrompt').value.trim()||'Create a fresh song concept.'}. Provide a title, concept, verse/chorus structure, original lyrics or hook, suitable chord progression, and arrangement ideas. Do not imitate a living artist's exact style.`;
+}
+async function ask(kind){
+ const prompt=buildPrompt(kind), out=$(kind+'Result'), btn=document.querySelector(`[data-ask="${kind}"]`);
+ if(!prompt){out.textContent='Please enter a question or some details first.';return}
+ btn.disabled=true;btn.textContent='Thinking…';out.textContent='Connecting to AI…';
+ try{
+  const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,tool:kind})});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.error||`Request failed (${res.status})`);
+  out.textContent=data.text||'No response returned.';
+ }catch(e){out.textContent='Could not reach the AI backend.\n\n'+e.message+'\n\nCheck that the backend is running, the API key is set on the server, and this page is served from the same host as /api/chat.'}
+ finally{btn.disabled=false;btn.textContent=({chat:'Ask AI',theory:'Explain',chords:'Generate progression',mixing:'Build mix starting points',songwriting:'Create song ideas'})[kind]}
+}
+document.querySelectorAll('[data-ask]').forEach(b=>b.addEventListener('click',()=>ask(b.dataset.ask)));
+</script>
+</body>
+</html>
